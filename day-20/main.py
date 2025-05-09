@@ -8,6 +8,7 @@ screen.setup(height=600, width=600)
 screen.bgcolor("black")
 screen.title("My snake game")
 screen.tracer(0)
+screen.listen()
 
 
 """
@@ -31,6 +32,11 @@ snake = set_starting_snake()
 """
 
 snake = Snake()
+
+screen.onkey(snake.move_up, "Up")
+screen.onkey(snake.move_down, "Down")
+screen.onkey(snake.move_right, "Right")
+screen.onkey(snake.move_left, "Left")
 
 while True:
     screen.update()
