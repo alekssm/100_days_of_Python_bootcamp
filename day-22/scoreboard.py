@@ -18,8 +18,11 @@ class Scoreboard(Turtle):
             self.player1_score += 1
         elif player == 2:
             self.player2_score += 1
+        self.clear()
+        self.score_writer()
 
     def score_writer(self):
         self.write(arg=f"{self.player1_score}    {self.player2_score}", align=ALIGNMENT, font=FONT)
+
 
 

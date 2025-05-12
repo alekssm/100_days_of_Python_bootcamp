@@ -2,7 +2,7 @@ import time
 import turtle as t
 import random
 from scoreboard import Scoreboard
-from paddle import Paddle
+from new_paddle import Paddle
 
 white_line = t.Turtle()
 
@@ -30,19 +30,17 @@ player2 = Paddle(2)
 
 scoreboard = Scoreboard()
 
-
-
-
+screen.onkey(player2.move_up, "Up")
+screen.onkey(player2.move_down, "Down")
+screen.onkey(player1.move_up, "w")
+screen.onkey(player1.move_down, "s")
 
 game_on = True
 while game_on:
     screen.update()
     time.sleep(0.1)
 
-    screen.onkey(player2.move_up, "Up")
-    screen.onkey(player2.move_down, "Down")
-    screen.onkey(player1.move_up, "w")
-    screen.onkey(player1.move_down, "s")
+
 
 
 

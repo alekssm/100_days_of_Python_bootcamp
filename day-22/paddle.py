@@ -40,6 +40,7 @@ class Paddle:
         return paddle_body
 
     def move_down(self):
+        #Checks if the paddle is at the screen border and if not moves it down
         if self.bottom_head.ycor() > - BORDER_DISTANCE:
             for body_part_num in range(len(self.body) - 1, 0, -1):
                 new_y = self.body[body_part_num - 1].ycor() - 20
@@ -48,6 +49,7 @@ class Paddle:
             self.bottom_head.forward(PADDLE_PACE)
 
     def move_up(self):
+        # Checks if the paddle is at the screen border and if not moves it up
         if self.upper_head.ycor() < BORDER_DISTANCE:
             for body_part_num in range(0,len(self.body) - 1):
                 x = self.body[0].xcor()
