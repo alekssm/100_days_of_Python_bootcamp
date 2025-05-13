@@ -25,4 +25,18 @@ class Scoreboard(Turtle):
         self.write(arg=f"{self.player1_score}    {self.player2_score}", align=ALIGNMENT, font=FONT)
 
 
+def draw_a_white_line():
+    """Draws the white line that splits the gaming field"""
+    white_line = Turtle()
 
+    white_line.teleport(x=0, y=300)
+    white_line.color("white")
+    white_line.hideturtle()
+    white_line.speed("fastest")
+    white_line.pensize(4)
+    white_line.setheading(270)
+    for i in range(0, 600, 20):
+        white_line.forward(20)
+        white_line.penup()
+        white_line.forward(20)
+        white_line.pendown()
