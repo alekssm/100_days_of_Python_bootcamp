@@ -1,6 +1,8 @@
 import time
 import turtle as t
 import random
+
+from ball import Ball
 from scoreboard import Scoreboard
 from new_paddle import Paddle
 
@@ -28,6 +30,8 @@ for i in range(0,600, 20):
 player1 = Paddle(1)
 player2 = Paddle(2)
 
+ball = Ball()
+
 scoreboard = Scoreboard()
 
 screen.onkey(player2.move_up, "Up")
@@ -39,6 +43,20 @@ game_on = True
 while game_on:
     screen.update()
     time.sleep(0.1)
+    ball.move()
+
+    #Checks if the ball has collided with top and bot wall and if so bounces from it
+    if ball.detect_collision_with_wall():
+        ball.bounce_from_wall()
+
+    if ball.distance(player1) < 50 and ball.xcor() < -330:
+        ball.bounce_from_paddle()
+
+    if ball.distance(player2) < 50 and ball.xcor() > 330:
+        ball.bounce_from_paddle()
+
+
+
 
 
 
