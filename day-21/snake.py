@@ -33,6 +33,7 @@ class Snake:
         last_part_y = self.head.ycor()
         self.body.append(self.create_part(last_part_x, last_part_y))
 
+
     def move(self):
         for body_part_num in range(len(self.body) - 1, 0, -1):
             new_x = self.body[body_part_num - 1].xcor()
