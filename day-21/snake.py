@@ -41,17 +41,17 @@ class Snake:
         self.head.forward(SNAKE_PACE)
 
     def move_up(self):
-        if self.head.heading() != 270:
+        if self.head.heading() != 270 and self.head.heading() !=90:
             self.head.setheading(90)
 
     def move_down(self):
-        if self.head.heading() != 90:
+        if self.head.heading() != 90 and self.head.heading() != 270:
             self.head.setheading(270)
 
     def move_right(self):
-        if self.head.heading() != 180:
+        if self.head.heading() != 180 and self.head.heading() != 360:
             self.head.setheading(360)
 
     def move_left(self):
-        if self.head.heading() != 360:
+        if self.head.heading() != 360 and self.head.heading() != 180:
             self.head.setheading(180)
