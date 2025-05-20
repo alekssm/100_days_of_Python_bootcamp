@@ -48,4 +48,8 @@ ten_to_25 = titanic.iloc[9:24, 4:6]
 print(ten_to_25)
 
 #It will assign the value to the chosen rows and columns cells
-#titanic.iloc[0:3, 1:5] = "koza"
+#titanic.iloc[0:3, 1:5] = "not available"
+
+
+
+
