@@ -8,5 +8,7 @@ print(air_quality.head())
 #Plot of the entire DF
 #air_quality.plot()
 
-air_quality.station_paris.plot()
-plt.show()
+
+#air_quality.station_paris.plot()
+air_quality["station_london_mg_per_cb"] = air_quality["station_london"] * 1.882
+print(air_quality)
