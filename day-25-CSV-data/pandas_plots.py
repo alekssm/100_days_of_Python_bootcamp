@@ -12,3 +12,6 @@ print(air_quality.head())
 #air_quality.station_paris.plot()
 air_quality["station_london_mg_per_cb"] = air_quality["station_london"] * 1.882
 print(air_quality)
+
+air_quality["ratio_paris_antwerp"] = air_quality["station_paris"] / air_quality["station_antwerp"]
+print(air_quality.head())
