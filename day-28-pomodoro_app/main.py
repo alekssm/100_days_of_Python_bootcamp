@@ -11,8 +11,19 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
+
+def reset_counter():
+    window.after_cancel(timer)
+    global reps
+    reps = 0
+    tick_label.config(text="")
+    main_label.config(text="Timer")
+    canvas.itemconfig(timer_text, text=f"00:00")
+
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_counter():
@@ -33,6 +44,8 @@ def start_counter():
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 
 def count_down(count):
+    global reps
+
     min_count = math.floor(count / 60)
     sec_count = count % 60
     if sec_count == 0:
@@ -42,15 +55,14 @@ def count_down(count):
 
     canvas.itemconfig(timer_text, text=f"{min_count}:{sec_count}")
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        global timer
+        timer = window.after(1000, count_down, count - 1)
     elif count == 0:
         start_counter()
+        marks = "✔" * math.floor(reps/2)
+        tick_label.config(text=marks)
 
 # ---------------------------- UI SETUP ------------------------------- #
-
-
-def stop_counter():
-    pass
 
 window = tkinter.Tk()
 window.title("Pomodoro")
@@ -68,10 +80,10 @@ canvas.grid(column=1, row=1)
 start_button = tkinter.Button(text="Start", command=start_counter, highlightthickness=0)
 start_button.grid(column=0, row=2)
 
-tick_label = tkinter.Label(text="✔", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 25, "bold"))
+tick_label = tkinter.Label(text="", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 25, "bold"))
 tick_label.grid(column=1, row=2)
 
-reset_button = tkinter.Button(text="Reset", command=start_counter, highlightthickness=0)
+reset_button = tkinter.Button(text="Reset", command=reset_counter, highlightthickness=0)
 reset_button.grid(column=2, row=2)
 
 
