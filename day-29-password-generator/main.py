@@ -2,10 +2,30 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 window = Tk()
 window.title("Password manager")
 window.config(padx=50, pady=50)
+
+
+# ---------------------------- SEARCH ENTRY ------------------------------- #
+def search_entry():
+    website = website_input_box.get()
+
+    try:
+        with open("data.json", "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        messagebox.showwarning(message="No Data File Found.")
+    else:
+        try:
+            email, password = data[website].values()
+        except KeyError:
+            messagebox.showwarning(message="No Logins found for this website.")
+        else:
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -47,15 +67,30 @@ def save_password():
     email_username = username_input_box.get()
     password = password_input_box.get()
 
+    new_data = {
+        website: {
+            "email": email_username,
+            "password": password
+        }
+    }
+
     if len(website) == 0 or len(email_username) == 0 or len(password) == 0:
         messagebox.showwarning(message="Fill all of the fields!")
     else:
-        confirmed = messagebox.showinfo(message=f"Confirm if you want to proceed:\nWebsite: {website}\n"
-                                  f"Email: {email_username}\nPassword: {password}")
-        if confirmed:
-            with open("data.txt", "a") as f:
-                f.write(f"{website} | {email_username} | {password}\n")
+        try:
+            with open("data.json", "r") as f:
+                data = json.load(f)
 
+        except FileNotFoundError:
+            with open("data.json", "w") as f:
+                json.dump(new_data, f, indent=4)
+
+        else:
+            data.update(new_data)
+            with open("data.json", "w") as f:
+                json.dump(data, f, indent=4)
+
+        finally:
             website_input_box.delete(0, END)
             username_input_box.delete(0, END)
             username_input_box.insert(END, string="testemail@gmail.com")
@@ -71,10 +106,10 @@ canvas.grid(column=1, row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0, row=1)
 
-website_input_box = Entry(width=35)
+website_input_box = Entry(width=20)
 website_input_box.insert(END, string="")
 website_input_box.focus()
-website_input_box.grid(column=1, row=1, columnspan=2)
+website_input_box.grid(column=1, row=1)
 
 username_label = Label(text="Email/Username:")
 username_label.grid(column=0, row=2)
@@ -96,7 +131,8 @@ password_button.grid(column=2, row=3)
 add_button = Button(text="Add", command=save_password, width=33)
 add_button.grid(column=1, row=4, columnspan=2)
 
-
+search_button = Button(text="Search", command=search_entry, width=11)
+search_button.grid(column=2, row=1)
 
 
 
