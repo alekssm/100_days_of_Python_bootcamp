@@ -14,15 +14,10 @@ except (FileNotFoundError, pd.errors.EmptyDataError):
 language = data_df.columns[0]
 native_language = data_df.columns[1]
 data = data_df.to_dict(orient="records")
-chosen_word = {}
 
-def skip_word():
-    pass
-
-def clear_word():
-    pass
 
 def next_word():
+    """Picks a random word from the data list as a dictionary and updates canvas accordingly"""
     global chosen_word
     global flip_timer
     window.after_cancel(flip_timer)
@@ -35,12 +30,14 @@ def next_word():
     flip_timer = window.after(COUNTDOWN, func=flip_card)
 
 def flip_card():
+    """Flips the canvas to the translated chosen word and updates it accordingly"""
     native_word = chosen_word[native_language]
     canvas.itemconfig(canvas_image, image=back_img)
     canvas.itemconfig(language_label, text=native_language, fill="white")
     canvas.itemconfig(word, text=native_word, fill="white")
 
 def remove_word():
+    """Removes the chosen random word from the data and updates the file"""
     data.remove(chosen_word)
     updated_data = pd.DataFrame(data)
     updated_data.to_csv("data/words_to_learn.csv", index=False)
@@ -58,14 +55,15 @@ def remove_word():
     #print(en_word)
     #canvas.itemconfig(word, text=f_word)
 
-
 window = Tk()
 window.title("FlashCard")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
 flip_timer = window.after(COUNTDOWN, func=flip_card)
 
+#-------------------------------------- UI --------------------------------------#
 
+"""Image and text"""
 canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
 front_img = PhotoImage(file="./images/card_front.png")
 back_img = PhotoImage(file="./images/card_back.png")
@@ -74,15 +72,16 @@ language_label = canvas.create_text(400, 150, text="", fill="black", font=("Aria
 word = canvas.create_text(400, 263, text="", fill="black", font=("Arial", 60, "bold"))
 canvas.grid(column=0, row=0, columnspan=2)
 
+"""X button"""
 wrong_image = PhotoImage(file="./images/wrong.png")
 wrong_button = Button(image=wrong_image, command=next_word, highlightthickness=0)
 wrong_button.grid(column=0, row=1)
 
+"""Tick button"""
 right_image = PhotoImage(file="./images/right.png")
 right_button = Button(image=right_image, command=remove_word, highlightthickness=0)
 right_button.grid(column=1, row=1)
 
 next_word()
-
 
 window.mainloop()
